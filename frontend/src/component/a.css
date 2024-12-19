@@ -1,0 +1,15 @@
+.heatmap-low {
+  fill: #ebedf0; /* Very Light Gray */
+}
+
+.heatmap-medium {
+  fill: #9be9a8; /* Light Green */
+}
+
+.heatmap-high {
+  fill: #40c463; /* Medium Green */
+}
+
+.heatmap-very-high {
+  fill: #30a14e; /* Dark Green */
+}
