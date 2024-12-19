@@ -145,7 +145,7 @@ const Dashboard = () => {
     <div className="container mx-auto p-8 h-full ">
 
 
-      User Stats
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="p-4 bg-white shadow rounded-lg">
           <h2 className="text-lg font-semibold text-gray-600">Username</h2>
@@ -166,7 +166,7 @@ const Dashboard = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 h-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 h-100">
         <div className="p-2 bg-white shadow rounded-lg h-80 flex flex-col justify-center items-center">
           <h3 className="text-lg font-semibold text-gray-600  text-center">Submissions by Status</h3>
           <div className="w-full h-full flex justify-center items-center">
@@ -184,33 +184,38 @@ const Dashboard = () => {
 
 
       {/* Recent Submissions */}
-      <div className="p-4 bg-white shadow rounded-lg">
-        <h3 className="text-lg font-semibold text-gray-600 mb-4">Recent Submissions</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border border-gray-300 px-4 py-2 text-left">Problem Title</th>
-                <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
-                <th className="border border-gray-300 px-4 py-2 text-left">Submitted At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentSubmissions.map((submission, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2">{submission.problem.title}</td>
-                  <td className="border border-gray-300 px-4 py-2 capitalize">{submission.status}</td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {new Date(submission.submittedAt).toLocaleDateString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="bg-white shadow rounded-lg p-6 mb-8">
-        <h3 className="text-gray-600 text-lg font-semibold mb-4">Submissions Heatmap</h3>
+      <div className="p-4 bg-white shadow rounded-lg mb-8">
+  <h3 className="text-lg font-semibold text-gray-600 mb-4">Recent Submissions</h3>
+  <div className="overflow-x-auto">
+    {recentSubmissions.length === 0 ? (
+      <p className="text-center text-gray-500">No submissions made</p>
+    ) : (
+      <table className="w-full border-collapse border border-gray-200">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 px-4 py-2 text-left">Problem Title</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Submitted At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {recentSubmissions.map((submission, index) => (
+            <tr key={index} className="hover:bg-gray-50">
+              <td className="border border-gray-300 px-4 py-2">{submission.problem.title}</td>
+              <td className="border border-gray-300 px-4 py-2 capitalize">{submission.status}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                {new Date(submission.submittedAt).toLocaleDateString()}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+</div>
+
+      <div className="bg-white shadow rounded-lg p-5 mb-8">
+        <h3 className="text-gray-600 text-lg font-semibold mb-3">Submissions Heatmap</h3>
         <CalendarHeatmap
           startDate={startDate}
           endDate={endDate}
