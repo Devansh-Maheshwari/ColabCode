@@ -40,10 +40,10 @@ const Dashboard = () => {
     console.log("in fetch")
     try {
       const [dashboardResponse, heatmapResponse] = await Promise.all([
-        axios.get('http://localhost:4000/api/dashboard', {
+        axios.get('https://colabcode-4vyd.onrender.com/api/dashboard', {
           params: { userId: user.id },
         }),
-        axios.get(`http://localhost:4000/api/heatmap/${user.id}`, {
+        axios.get(`https://colabcode-4vyd.onrender.com/api/heatmap/${user.id}`, {
           params: { startDate: startDate.toISOString(), endDate: endDate.toISOString() },
         }),
       ]);

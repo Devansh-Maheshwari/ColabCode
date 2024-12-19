@@ -16,7 +16,7 @@ const PostChallenge = () => {
         const challenge = { title: name, description, level, inputCases, outputCases, userId:user.id };
         console.log(challenge)
         try {
-            await axios.post('http://localhost:4000/challenges', challenge);
+            await axios.post('https://colabcode-4vyd.onrender.com/challenges', challenge);
             alert('Challenge submitted successfully');
             setName('');
             setDescription('');

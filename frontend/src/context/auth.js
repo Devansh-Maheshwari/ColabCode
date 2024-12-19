@@ -24,7 +24,7 @@ export const AuthProvider=({children})=>{
 
     const login = async (email,password) => {
         try{
-            const res = await fetch('http://localhost:4000/login' ,{
+            const res = await fetch('https://colabcode-4vyd.onrender.com/login' ,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify({email,password}),
@@ -48,7 +48,7 @@ export const AuthProvider=({children})=>{
     const signup = async({username ,email, password}) => {
         try{ 
             console.log(email)
-            const res = await fetch('http://localhost:4000/signup' ,{
+            const res = await fetch('https://colabcode-4vyd.onrender.com/signup' ,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify({username,email,password}),

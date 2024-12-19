@@ -10,7 +10,7 @@ const SubmissionHistory = ({ problem, setUserCode }) => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/submissions/${problem._id}/${user.id}`);
+        const response = await fetch(`https://colabcode-4vyd.onrender.com/api/submissions/${problem._id}/${user.id}`);
         const data = await response.json();
         setSubmissions(data.submissions || []);
       } catch (error) {

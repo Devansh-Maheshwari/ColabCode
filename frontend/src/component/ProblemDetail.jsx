@@ -17,7 +17,7 @@ const ProblemDetail = () => {
   const [testResults, setTestResults] = useState([]); // State for test case results
   const [isLoading, setIsLoading] = useState(false); // Loading indicator state
   const { user } = useAuth();
-  const socket = io("http://localhost:4000");
+  const socket = io("https://colabcode-4vyd.onrender.com");
   console.log(chats);
   useEffect(()=>{
     if(!problem)return ;
@@ -27,7 +27,7 @@ const ProblemDetail = () => {
     const fetchChats=async()=>{
       try{
         console.log("in fetch");
-        const response=await fetch(`http://localhost:4000/api/chats/${problem._id}`);
+        const response=await fetch(`https://colabcode-4vyd.onrender.com/api/chats/${problem._id}`);
         const data=await response.json();
         setChats(data);
       }catch(error){
@@ -44,7 +44,7 @@ const ProblemDetail = () => {
     if(!message.trim())return;
     try {
       console.log("in send")
-      const response = await fetch('http://localhost:4000/api/chats/send', {
+      const response = await fetch('https://colabcode-4vyd.onrender.com/api/chats/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -67,7 +67,7 @@ const ProblemDetail = () => {
   const handleRun = async () => {
     setIsLoading(true); // Set loading to true when the request starts
     try {
-      const response = await fetch('http://localhost:4000/api/run', {
+      const response = await fetch('https://colabcode-4vyd.onrender.com/api/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,7 +92,7 @@ const ProblemDetail = () => {
   const handleSubmit = async () => {
     setIsLoading(true); // Set loading to true when the request starts
     try {
-      const response = await fetch('http://localhost:4000/api/submit', {
+      const response = await fetch('https://colabcode-4vyd.onrender.com/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

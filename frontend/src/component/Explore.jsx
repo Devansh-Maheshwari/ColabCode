@@ -81,7 +81,7 @@ const Explore = () => {
         const fetchProblems = async () => {
             try {
                 console.log("in fetchproblem")
-                const response = await fetch('http://localhost:4000/challenges/');
+                const response = await fetch('https://colabcode-4vyd.onrender.com/challenges/');
                 const data = await response.json();
                 setProblems(data);
                 setLoading(false);
