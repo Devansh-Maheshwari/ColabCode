@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useAsyncError, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Editor from './Editor';
 import { useAuth } from '../context/auth';
-import SubmissionHistory from './SubmissionHistory'; // Import the new component
+import SubmissionHistory from './SubmissionHistory'; 
 import io from 'socket.io-client';
 const ProblemDetail = () => {
-  console.log("hi")
+  // console.log("hi")
   const location = useLocation();
-  const problem = location.state?.problem; // Get the problem object from location state
-  const [userCode, setUserCode] = useState(''); // User code state
-  const [activeTab, setActiveTab] = useState('description'); // Default active tab
+  const problem = location.state?.problem;
+  const [userCode, setUserCode] = useState(''); 
+  const [activeTab, setActiveTab] = useState('description'); 
   const [customInput, setCustomInput] = useState('');
   const [runOutput, setRunOutput] = useState('');
   const [message,setMessage]=useState('');
   const [chats,setChats]=useState([]);
-  const [testResults, setTestResults] = useState([]); // State for test case results
-  const [isLoading, setIsLoading] = useState(false); // Loading indicator state
+  const [testResults, setTestResults] = useState([]); 
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
   const socket = io("https://colabcode-4vyd.onrender.com");
-  console.log(chats);
+  // console.log(chats);
   useEffect(()=>{
     if(!problem)return ;
     socket.on('new_message',(newMessage)=>{
@@ -26,7 +27,7 @@ const ProblemDetail = () => {
     });
     const fetchChats=async()=>{
       try{
-        console.log("in fetch");
+        // console.log("in fetch");
         const response=await fetch(`https://colabcode-4vyd.onrender.com/api/chats/${problem._id}`);
         const data=await response.json();
         setChats(data);
@@ -38,12 +39,12 @@ const ProblemDetail = () => {
     return ()=>{
       socket.disconnect();
     }
-  },[problem])
+  },[problem,socket])
 
   const handleSendMessage=async()=>{
     if(!message.trim())return;
     try {
-      console.log("in send")
+      // console.log("in send")
       const response = await fetch('https://colabcode-4vyd.onrender.com/api/chats/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -54,7 +55,7 @@ const ProblemDetail = () => {
         }),
       });
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setMessage(''); // Clear the message input
 
       // Emit new message to all clients using socket.io
@@ -65,7 +66,15 @@ const ProblemDetail = () => {
   }
 
   const handleRun = async () => {
-    setIsLoading(true); // Set loading to true when the request starts
+    if(!user){alert("login to run")
+      navigate("/login")
+      return 
+  }
+  if(userCode===""){
+    alert("write code!!");
+    return;
+  }
+  setIsLoading(true); 
     try {
       const response = await fetch('https://colabcode-4vyd.onrender.com/api/run', {
         method: 'POST',
@@ -73,8 +82,8 @@ const ProblemDetail = () => {
         body: JSON.stringify({
           code: userCode,
           input: customInput,
-          language: 'cpp', // Set default language for the editor
-          version: '10.2.0', // Ensure the version matches the backend API
+          language: 'cpp', 
+          version: '10.2.0', 
         }),
       });
 
@@ -85,12 +94,20 @@ const ProblemDetail = () => {
       console.error('Run failed:', error);
       setRunOutput('Error running the code.');
     } finally {
-      setIsLoading(false); // Set loading to false after the request finishes
+      setIsLoading(false); 
     }
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true); // Set loading to true when the request starts
+      if(!user){alert("login to run")
+        navigate("/login")
+        return 
+  }
+  if(userCode===""){
+    alert("write code!!");
+    return;
+  }
+    setIsLoading(true); 
     try {
       const response = await fetch('https://colabcode-4vyd.onrender.com/api/submit', {
         method: 'POST',
@@ -107,6 +124,7 @@ const ProblemDetail = () => {
       });
 
       const data = await response.json();
+      // console.log(data);
       if (data.status === 'Accepted') {
         alert('Code Accepted!');
       } else {
@@ -117,11 +135,11 @@ const ProblemDetail = () => {
       console.error('Submission failed:', error);
       alert('Error submitting the code.');
     } finally {
-      setIsLoading(false); // Set loading to false after the request finishes
+      setIsLoading(false); 
     }
   };
 
-  if (!problem) return <div>Loading...</div>; // Fallback in case of undefined problem
+  if (!problem) return <div>Loading...</div>; 
 
   return (
     <div className="flex p-10 bg-gray-200 h-full w-screen ">
