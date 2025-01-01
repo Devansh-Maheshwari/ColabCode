@@ -137,6 +137,7 @@ exports.runCode = async (req, res) => {
 
 exports.submitCode = async (req, res) => {
   const { problemId, code, input, outputcase, language = "cpp", version = "10.2.0", userId } = req.body;
+  console.log(req.body);
 
   if (!userId) {
     return res.status(401).json({ error: "Unauthorized: User not logged in." });

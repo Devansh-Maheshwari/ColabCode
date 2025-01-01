@@ -39,7 +39,7 @@ const ProblemDetail = () => {
     return ()=>{
       socket.disconnect();
     }
-  },[problem,socket])
+  },[problem])
 
   const handleSendMessage=async()=>{
     if(!message.trim())return;
