@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const token = localStorage.getItem('token');
-        console.log(storedUser,token);
+        // console.log(storedUser,token);
         if (storedUser && token) {
             setUser(JSON.parse(storedUser));
             setIsLoggedIn(true);
@@ -36,7 +36,7 @@ export const AuthProvider=({children})=>{
                 console.log(data.user);
                 localStorage.setItem('token',data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
-                console.log("data=",localStorage.getItem('token'))
+                // console.log("data=",localStorage.getItem('token'))
                 navigate('/dashboard');
             }else{
                 alert(data.message);
@@ -72,8 +72,8 @@ export const AuthProvider=({children})=>{
         localStorage.removeItem('user');
         setIsLoggedIn(false);
         navigate('/');
-        console.log(localStorage.getItem('token'))
-        console.log("looged out")
+        // console.log(localStorage.getItem('token'))
+        // console.log("looged out")
     }
     return(
         <AuthContext.Provider value={{user ,login, signup, logout, isLoggedIn}}>
