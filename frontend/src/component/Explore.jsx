@@ -52,9 +52,9 @@ const Explore = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProblems, setFilteredProblems] = useState([]);
     const navigate = useNavigate();
-    console.log("hi")
+    // console.log("hi")
     const suffixTrees = useMemo(() => {
-        console.log("in tree")
+        // console.log("in tree")
         const map = new Map();
         problems.forEach((problem) => {
             map.set(problem._id, new SuffixTree(problem.title));
@@ -70,7 +70,7 @@ const Explore = () => {
                 const suffixTree = suffixTrees.get(problem._id);
                 return suffixTree.search(query).length > 0;
             });
-            console.log("in debounce")
+            // console.log("in debounce")
             setFilteredProblems(filtered);
         }, 600),
         [problems, suffixTrees] // dependencies: problems and suffixTrees
@@ -80,7 +80,7 @@ const Explore = () => {
     useEffect(() => {
         const fetchProblems = async () => {
             try {
-                console.log("in fetchproblem")
+                // console.log("in fetchproblem")
                 const response = await fetch('https://colabcode-4vyd.onrender.com/challenges/');
                 const data = await response.json();
                 setProblems(data);
@@ -95,7 +95,7 @@ const Explore = () => {
 
     // Trigger search whenever the query changes
     useEffect(() => {
-        console.log("in useeffect of debounce")
+        // console.log("in useeffect of debounce")
         debouncedSearch(searchQuery);
     }, [searchQuery, debouncedSearch]);
 
@@ -104,11 +104,11 @@ const Explore = () => {
     };
 
     if (loading) {
-        return <div className="bg-black text-white p-10 w-screen">Loading...</div>;
+        return <div className="bg-black text-white p-10 w-screen h-full">Loading...</div>;
     }
 
     if (error) {
-        return <div className="bg-black text-white p-10 w-screen">Error: {error}</div>;
+        return <div className="bg-black text-white p-10 w-screen h-full">Error: {error}</div>;
     }
 
     return (
@@ -122,11 +122,11 @@ const Explore = () => {
                 className="p-1 rounded-lg mb-6 text-black w-1/4"
             />
             {filteredProblems.length === 0 ? (
-                <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center h-full">
                     <p className="text-gray-400">No challenges found.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 gap-6 h-full">
                     {filteredProblems.map((problem) => (
                         <div key={problem._id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
                             <h3 className="text-xl font-semibold mb-2">{problem.title}</h3>
