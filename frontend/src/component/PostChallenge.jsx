@@ -8,13 +8,13 @@ const PostChallenge = () => {
     const [testCases, setTestCases] = useState([{ input: '', output: '' }]);
     // const [userId, setUserId] = useState(); // Add userId to submit with the challenge
     const {user} = useAuth();
-    console.log(user);
+    // console.log(user);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const inputCases = testCases.map(tc => tc.input);
         const outputCases = testCases.map(tc => tc.output);
         const challenge = { title: name, description, level, inputCases, outputCases, userId:user.id };
-        console.log(challenge)
+        // console.log(challenge)
         try {
             await axios.post('https://colabcode-4vyd.onrender.com/challenges', challenge);
             alert('Challenge submitted successfully');
