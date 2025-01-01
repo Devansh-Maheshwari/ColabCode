@@ -12,7 +12,7 @@ const Dashboard = () => {
     heatmapData: [],
     loading: true,
   });
-  console.log("hi")
+  // console.log("hi")
   const { user } = useAuth();
   const today = new Date();
   const startDate = new Date(today.getFullYear(), 0, 1); // Start of the year
@@ -37,7 +37,7 @@ const Dashboard = () => {
 };
   // Fetch dashboard data and heatmap data in parallel
   const fetchData = useCallback(async () => {
-    console.log("in fetch")
+    // console.log("in fetch")
     try {
       const [dashboardResponse, heatmapResponse] = await Promise.all([
         axios.get('https://colabcode-4vyd.onrender.com/api/dashboard', {
@@ -68,7 +68,7 @@ const Dashboard = () => {
   }, [fetchData]);
 
   const { dashboardData, heatmapData, loading } = data;
-  console.log(dashboardData)
+  // console.log(dashboardData)
   if (loading) {
     return <div className="text-center mt-20 text-xl font-semibold">Loading...</div>;
   }
@@ -117,7 +117,7 @@ const Dashboard = () => {
   };
   const statusOptions = {
     responsive: true,
-    maintainAspectRatio: true, // Allow the chart to resize based on the container
+    maintainAspectRatio: false, // Allow the chart to resize based on the container
     plugins: {
       legend: {
         position: 'top', // This will help keep the legend inside the chart area
@@ -166,21 +166,21 @@ const Dashboard = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 h-100">
-        <div className="p-2 bg-white shadow rounded-lg h-80 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold text-gray-600  text-center">Submissions by Status</h3>
-          <div className="w-full h-full flex justify-center items-center">
-             <Pie data={statusData} options={statusOptions} />
-          </div>
-        </div>
+      <div className="flex flex-col md:flex-row gap-8 mb-8 h-90 ">
+  <div className="p-2 bg-white shadow rounded-lg h-85 flex flex-col justify-center items-center w-full md:w-1/2">
+    <h3 className="text-lg font-semibold text-gray-600 text-center">Submissions by Status</h3>
+    <div className="w-full h-80 flex justify-center items-center">
+      <Pie data={statusData} options={statusOptions} />
+    </div>
+  </div>
 
-        <div className="p-4 bg-white shadow rounded-lg h-80 flex flex-col justify-center items-center">
-         <h3 className="text-lg font-semibold text-gray-600 mb-4 text-center">Problems Solved by Level</h3>
-         <div className="w-full h-full flex justify-center items-center">
-          <Bar data={levelData} options={levelOptions} />
-         </div>
-        </div>
-      </div>
+  <div className="p-2 bg-white shadow rounded-lg h-85 flex flex-col justify-center items-center w-full md:w-1/2">
+    <h3 className="text-lg font-semibold text-gray-600 mb-4 text-center">Problems Solved by Level</h3>
+    <div className="w-full h-80 flex justify-center items-center">
+      <Bar data={levelData} options={levelOptions} />
+    </div>
+  </div>
+</div>
 
 
       {/* Recent Submissions */}
