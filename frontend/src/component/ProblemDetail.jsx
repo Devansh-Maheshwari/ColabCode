@@ -48,11 +48,10 @@ const ProblemDetail = () => {
     fetchChats();
   }, [problem]);
   useEffect(() => {
-    console.log('Component mounted: Socket initialized.');
-  
+    // console.log('Component mounted: Socket initialized.');
     // This function will run only on cleanup
     return () => {
-      console.log('Component unmounted: Socket disconnected.');
+      // console.log('Component unmounted: Socket disconnected.');
       socket.disconnect();
     };
   }, []);
