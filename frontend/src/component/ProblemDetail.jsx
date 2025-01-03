@@ -20,27 +20,43 @@ const ProblemDetail = () => {
   const navigate = useNavigate();
   const socket = io("https://colabcode-4vyd.onrender.com");
   // console.log(chats);
-  useEffect(()=>{
-    if(!problem)return ;
-    socket.on('new_message',(newMessage)=>{
-      setChats((prevChats)=>[...prevChats,newMessage]);
-    });
-    const fetchChats=async()=>{
-      try{
-        // console.log("in fetch");
-        const response=await fetch(`https://colabcode-4vyd.onrender.com/api/chats/${problem._id}`);
-        const data=await response.json();
+  useEffect(() => {
+    const handleNewMessage = (newMessage) => {
+      setChats((prevChats) => [...prevChats, newMessage]);
+    };
+  
+    socket.on('new_message', handleNewMessage);
+  
+    return () => {
+      socket.off('new_message', handleNewMessage);
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (!problem) return;
+  
+    const fetchChats = async () => {
+      try {
+        const response = await fetch(`https://colabcode-4vyd.onrender.com/api/chats/${problem._id}`);
+        const data = await response.json();
         setChats(data);
-      }catch(error){
-        console.log('Error fetching chats',error);
+      } catch (error) {
+        console.log('Error fetching chats:', error);
       }
     };
+  
     fetchChats();
-    return ()=>{
+  }, [problem]);
+  useEffect(() => {
+    console.log('Component mounted: Socket initialized.');
+  
+    // This function will run only on cleanup
+    return () => {
+      console.log('Component unmounted: Socket disconnected.');
       socket.disconnect();
-    }
-  },[problem])
-
+    };
+  }, []);
+  
   const handleSendMessage=async()=>{
     if(!message.trim())return;
     try {
